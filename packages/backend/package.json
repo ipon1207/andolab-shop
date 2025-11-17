@@ -1,0 +1,24 @@
+{
+  "name": "@andolab-shop/backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@andolab-shop/db-schema": "^1.0.0",
+    "@andolab-shop/shared": "^1.0.0",
+    "@hono/node-server": "^1.19.6",
+    "hono": "^4.10.6"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.9.3"
+  }
+}
