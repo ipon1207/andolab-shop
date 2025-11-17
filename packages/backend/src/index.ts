@@ -1,8 +1,18 @@
-import { serve } from "@hono/node-server";
-import { db, users } from "@andolab-shop/db-schema";
-import { Hono } from "hono";
+import { serve } from '@hono/node-server';
+import { db, users } from '@andolab-shop/db-schema';
+import { Hono } from 'hono';
+import { cors } from 'hono/cors';
 
 const app = new Hono();
+
+app.use(
+    '/api/*',
+    cors({
+        origin: 'http://localhost:8080',
+        allowHeaders: ['Content-Type', 'Authorization'],
+        allowMethods: ['POST', 'GET', 'OPTIONS'],
+    }),
+);
 
 // GET /user: 全ユーザーを取得するAPI
 app.get('/api/users', async (c) => {
@@ -12,11 +22,15 @@ app.get('/api/users', async (c) => {
 
 // POST /user: テストデータを追加するAPI
 app.post('/api/users', async (c) => {
-    await db.insert(users).values([
-        { name: 'Alice', email: 'alice@example.com'},
-        { name: 'Bob', email: 'bob@example.com' },
-    ]).onConflictDoNothing().run();
-    return c.json({ message: 'Test data inserted'}, 201);
+    await db
+        .insert(users)
+        .values([
+            { name: 'Alice', email: 'alice@example.com' },
+            { name: 'Bob', email: 'bob@example.com' },
+        ])
+        .onConflictDoNothing()
+        .run();
+    return c.json({ message: 'Test data inserted' }, 201);
 });
 
 const port = 3000;

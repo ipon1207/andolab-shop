@@ -1,25 +1,26 @@
 {
-  "name": "@andolab-shop/backend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "module",
-  "dependencies": {
-    "@andolab-shop/db-schema": "^1.0.0",
-    "@andolab-shop/shared": "^1.0.0",
-    "@hono/node-server": "^1.19.6",
-    "hono": "^4.10.6"
-  },
-  "devDependencies": {
-    "@types/node": "^24.10.1",
-    "tsx": "^4.20.6",
-    "typescript": "^5.9.3"
-  }
+    "name": "@andolab-shop/backend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev": "tsx watch src/index.ts",
+        "build": "tsc",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "type": "module",
+    "dependencies": {
+        "@andolab-shop/db-schema": "^1.0.0",
+        "@andolab-shop/shared": "^1.0.0",
+        "@hono/node-server": "^1.19.6",
+        "hono": "^4.10.6"
+    },
+    "devDependencies": {
+        "@types/node": "^24.10.1",
+        "tsx": "^4.20.6",
+        "typescript": "^5.9.3"
+    }
 }

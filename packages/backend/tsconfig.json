@@ -1,11 +1,12 @@
 {
-  "extends": "../../tsconfig.base.json",
+    "extends": "../../tsconfig.base.json",
 
-  "compilerOptions": {
-    "lib": ["ESNext"],
-    "module": "ESNext",
-    "outDir": "dist"
-  },
-  "include": ["src"],
-  "exclude": ["node_modules"]
+    "compilerOptions": {
+        "noEmit": false,
+        "lib": ["ESNext"],
+        "module": "ESNext",
+        "outDir": "dist"
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "dist"]
 }
