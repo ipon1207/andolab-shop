@@ -1,133 +1,131 @@
-# Andolab Shop
-
-Raspberry Pi上で動作する、安藤研究室購買システム
+<div align="center">
+  <img src="<ここにプロジェクトのロゴ画像などを置くと格好良いです>" alt="プロジェクトロゴ" width="150">
+  <h1>Andolab Shop - 安藤研究室 購買システム</h1>
+  <p>Raspberry Pi上で動作する、研究室の物品管理・販売を効率化するためのアプリケーションです。</p>
+  <p>
+    <img src="https://img.shields.io/badge/Node.js-v20.x-339933?logo=nodedotjs" alt="Node.js version">
+    <img src="https://img.shields.io/badge/React-18-61DAFB?logo=react" alt="React version">
+    <img src="https://img.shields.io/badge/Hono-v4-E65225?logo=hono" alt="Hono version">
+    <img src="https://img.shields.io/badge/SQLite-3-003B57?logo=sqlite" alt="SQLite version">
+    <img src="https://img.shields.io/badge/code%20style-Prettier-ff69b4.svg" alt="Code style: Prettier">
+  </p>
+</div>
 
 ---
 
 ## 📚 目次
 
-- [✨ プロジェクト概要](#-プロジェクト概要)
+- [✨ 概要](#-概要)
+- [🎯 主な機能](#-主な機能)
 - [🛠️ 技術スタック](#️-技術スタック)
-- [📂 ディレクトリ構成](#-ディレクトリ構成)
-- [🚀 セットアップと起動方法](#-セットアップと起動方法)
-- [📜 利用可能なスクリプト](#-利用可能なスクリプト)
-- [✍️ 開発の進め方とルール](#️-開発の進め方とルール)
+- [🚀 導入と開発](#-導入と開発)
+- [📜 npmスクリプト一覧](#-npmスクリプト一覧)
+- [🚢 本番環境へのデプロイ](#-本番環境へのデプロイ)
+- [🤝 開発への貢献](#-開発への貢献)
 
 ---
 
-## ✨ プロジェクト概要
+## ✨ 概要
 
-このプロジェクトは、Andolabのメンバーが技術学習と実用を兼ねて開発している、Raspberry Pi上で動作するアプリケーションです。購買システムとして、研究室内での物品管理や販売を効率化することを目的としています。
+**Andolab Shop**は、安藤研究室のメンバーが技術学習と実用を兼ねて開発している、Raspberry Pi上で動作する購買システムです。研究室内での物品管理や販売を効率化し、より快適な研究生活をサポートすることを目的としています。
 
-主な機能として、以下のものを計画しています。
+このプロジェクトはnpm Workspacesを利用したモノレポ構成を採用しており、フロントエンドとバックエンドのコードが一つのリポジトリで管理されています。
 
-- <機能1 例: 商品の閲覧機能>
-- <機能2 例: 在庫管理機能>
-- <機能3 例: ...>
+## 🎯 主な機能
+
+- [ ] 商品の閲覧・検索機能
+- [ ] 商品の購入機能
+- [ ] 在庫管理機能（管理者向け）
+- [ ] 購入履歴の確認機能
 
 ## 🛠️ 技術スタック
 
-このプロジェクトは、以下の技術スタックで構成されています。
+| カテゴリ           | 技術                                                                                                                                              |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **モノレポ管理**   | [npm Workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces)                                                                              |
+| **フロントエンド** | [React](https://react.dev/), [Vite](https://vitejs.dev/), [TypeScript](https://www.typescriptlang.org/), [Tailwind CSS](https://tailwindcss.com/) |
+| **バックエンド**   | [Hono](https://hono.dev/), [TypeScript](https://www.typescriptlang.org/)                                                                          |
+| **データベース**   | [SQLite](https://www.sqlite.org/index.html)                                                                                                       |
+| **ORM**            | [Drizzle ORM](https://orm.drizzle.team/)                                                                                                          |
+| **コード品質**     | [ESLint](https://eslint.org/), [Prettier](https://prettier.io/)                                                                                   |
+| **実行環境**       | [Node.js](https://nodejs.org/), Raspberry Pi 4 Model B                                                                                            |
 
-| カテゴリ           | 技術                                                                                                                                                |
-| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **モノレポ管理**   | [npm Workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces)                                                                                |
-| **フロントエンド** | [React](https://reactjs.org/), [Vite](https://vitejs.dev/), [TypeScript](https://www.typescriptlang.org/), [Tailwind CSS](https://tailwindcss.com/) |
-| **バックエンド**   | [Hono](https://hono.dev/), [TypeScript](https://www.typescriptlang.org/)                                                                            |
-| **データベース**   | [SQLite](https://www.sqlite.org/index.html)                                                                                                         |
-| **ORM**            | [Drizzle ORM](https://orm.drizzle.team/)                                                                                                            |
-| **スキーマ定義**   | [Zod](https://zod.dev/)                                                                                                                             |
-| **コード品質**     | [ESLint](https://eslint.org/), [Prettier](https://prettier.io/)                                                                                     |
-| **実行環境**       | [Node.js](https://nodejs.org/), Raspberry Pi 4 Model B                                                                                              |
+---
 
-## 📂 ディレクトリ構成
+## 🚀 導入と開発
 
-このプロジェクトは npm Workspaces を利用したモノレポ構成です。主要なディレクトリは以下の通りです。
-
-```
-.
-├── packages/
-│   ├── frontend/   # React (Vite) で構築されたフロントエンドアプリケーション
-│   ├── backend/    # Hono で構築されたバックエンドAPIサーバー
-│   ├── db-schema/  # Drizzle ORM のスキーマ定義とマイグレーションファイル
-│   └── shared/     # フロントエンドとバックエンドで共有される型定義など (現在は未使用)
-└── ...
-```
-
-## 🚀 セットアップと起動方法
-
-このプロジェクトをローカル環境で動かすための手順です。
+このプロジェクトをローカル環境でセットアップし、開発を始めるための手順です。
 
 ### 1. 前提条件
 
 - [Node.js](https://nodejs.org/) (v20.x 以上を推奨)
 - [Git](https://git-scm.com/)
 
-### 2. セットアップ手順
+### 2. 初回セットアップ
 
-1.  **リポジトリをクローンします**
+1.  **リポジトリをクローンします。**
 
     ```bash
     git clone <リポジトリのURL>
-    cd <リポジトリ名>
+    cd andolab-shop
     ```
 
-2.  **依存パッケージをインストールします**
-    プロジェクトのルートディレクトリで以下のコマンドを実行すると、すべてのパッケージ（フロントエンド、バックエンド等）の依存関係が一度にインストールされます。
+2.  **依存パッケージを一括インストールします。**
 
     ```bash
     npm install
     ```
 
-3.  **（初回のみ）データベースを準備します**
+3.  **データベースを準備します。**
     スキーマ定義を元に、SQLiteのデータベースファイルとテーブルを作成します。
-
     ```bash
     npm run db:migrate
     ```
+    成功すると `packages/db-schema/sqlite.db` が生成されます。
 
-    成功すると、`packages/db-schema/`ディレクトリに`sqlite.db`ファイルが作成されます。
+### 3. 日常の開発
 
-4.  **開発サーバーを起動します**
-    フロントエンドとバックエンドの開発サーバーを同時に起動します。
+1.  **開発サーバーを起動します。**
+    フロントエンドとバックエンドのサーバーが同時に起動し、コードの変更が自動で反映されます。
 
     ```bash
     npm run dev
     ```
 
-5.  **ブラウザで確認**
-    - フロントエンド: `http://localhost:5173` (Viteのデフォルト)
-    - バックエンドAPI: `http://localhost:3000`
+2.  **ブラウザでアクセスします。**
+    - **フロントエンド:** `http://localhost:5173`
+    - **バックエンド API:** `http://localhost:3000`
 
-    にアクセスして、アプリケーションが表示されればセットアップ完了です！
+---
 
-## 📜 利用可能なスクリプト
+## 📜 npmスクリプト一覧
 
 プロジェクトのルートディレクトリで、以下のnpmスクリプトが利用できます。
 
-- `npm run dev`
-    - フロントエンドとバックエンドの開発サーバーを同時に起動します。
-
-- `npm run dev:frontend` / `npm run dev:backend`
-    - それぞれのサーバーを個別に起動します。
-
-- `npm run db:generate`
-    - `packages/db-schema/src` 内のスキーマ定義ファイルの変更を元に、新しいマイグレーションファイルを生成します。
-
-- `npm run db:migrate`
-    - 未適用のマイグレーションファイルを実行し、データベースのスキーマを更新します。
-
-- `npm run lint`
-    - プロジェクト全体のコードに対して、ESLintによる静的解析を実行します。
-
-- `npm run format`
-    - プロジェクト全体のコードを、Prettierを使って自動整形します。
-
-## ✍️ 開発の進め方とルール
-
-このプロジェクトでの開発の進め方、ブランチ戦略、Pull Requestのルールなどは、以下のドキュメントにまとめています。
-開発を始める前に、必ず一度目を通してください。
-
-**[ CONTRIBUTING.md ](./CONTRIBUTING.md)**
+| スクリプト             | 説明                                                                 |
+| ---------------------- | -------------------------------------------------------------------- |
+| `npm run dev`          | フロントエンドとバックエンドの開発サーバーを同時に起動します。       |
+| `npm run dev:frontend` | フロントエンドの開発サーバーのみを起動します。                       |
+| `npm run dev:backend`  | バックエンドの開発サーバーのみを起動します。                         |
+| `npm run build`        | 全パッケージを本番環境用にビルドします。                             |
+| `npm run start`        | **本番用:** ビルド済みのバックエンドサーバーを起動します。           |
+| `npm run db:generate`  | スキーマ定義の変更から、新しいマイグレーションファイルを生成します。 |
+| `npm run db:migrate`   | 未適用のマイグレーションを実行し、データベースを更新します。         |
+| `npm run lint`         | ESLintでコードの静的解析を実行します。                               |
+| `npm run format`       | Prettierでコードを自動整形します。                                   |
 
 ---
+
+## 🚢 本番環境へのデプロイ
+
+このアプリケーションをRaspberry Pi上で永続化させ、OS起動時に自動でサーバーを起動させるための手順は、以下のドキュメントにまとめています。
+
+**[ DEPLOYMENT.md ](./documents/DEPLOYMENT.md)**
+
+---
+
+## 🤝 開発への貢献
+
+このプロジェクトでの開発の進め方、ブランチ戦略、Pull Requestのルールなどは、以下のドキュメントにまとめています。開発を始める前に、必ず一度目を通してください。
+
+**[ CONTRIBUTING.md ](./CONTRIBUTING.md)**
