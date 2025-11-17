@@ -31,7 +31,7 @@ function App() {
 
   return (
     <>
-      <h1>ユーザーリスト</h1>
+      <h1 className="bg-amber-50">ユーザーリスト</h1>
       {loading && <p>読み込み中...</p>}
       {error && <p style={{ color: 'red' }}>エラー: {error}</p>}
       <ul>
