@@ -12,6 +12,7 @@
         "db:generate": "npm run generate -w @andolab-shop/db-schema",
         "db:migrate": "npm run migrate -w @andolab-shop/db-schema",
         "db:seed": "npm run seed -w @andolab-shop/db-schema",
+        "db:studio": "npm run studio -w @andolab-shop/db-schema",
         "test": "echo \"Error: no test specified\" && exit 1",
         "lint": "eslint . --ext .ts,.tsx",
         "format": "prettier --write .",
@@ -43,5 +44,9 @@
         "*.{json,md,css}": [
             "prettier --write"
         ]
+    },
+    "dependencies": {
+        "drizzle-kit": "^0.31.7",
+        "drizzle-orm": "^0.44.7"
     }
 }
