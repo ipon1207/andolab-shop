@@ -19,8 +19,7 @@
 - [🛠️ 技術スタック](#️-技術スタック)
 - [🚀 導入と開発](#-導入と開発)
 - [📜 npmスクリプト一覧](#-npmスクリプト一覧)
-- [🚢 本番環境へのデプロイ](#-本番環境へのデプロイ)
-- [🤝 開発への貢献](#-開発への貢献)
+- [📖 ドキュメント](#-ドキュメント)
 
 ---
 
@@ -81,6 +80,7 @@
     npm run db:migrate
     ```
     成功すると `packages/db-schema/sqlite.db` が生成されます。
+    > ℹ️ マイグレーション、シーディングなど、より詳しいデータベースの操作については **[DATABASE_GUIDE.md](./documents/DATABASE_GUIDE.md)** を参照してください。
 
 ### 3. 日常の開発
 
@@ -111,21 +111,21 @@
 | `npm run db:generate`  | スキーマ定義の変更から、新しいマイグレーションファイルを生成します。           |
 | `npm run db:migrate`   | 未適用のマイグレーションを実行し、データベースを更新します。                   |
 | `npm run db:seed`      | **開発用の初期データをデータベースに投入します。（既存データは削除されます）** |
+| `npm run db:studio`    | GUIのデータベースブラウザ (Drizzle Studio) を起動します。                      |
 | `npm run lint`         | ESLintでコードの静的解析を実行します。                                         |
 | `npm run format`       | Prettierでコードを自動整形します。                                             |
 
 ---
 
-## 🚢 本番環境へのデプロイ
+## 📖 ドキュメント
 
-このアプリケーションをRaspberry Pi上で永続化させ、OS起動時に自動でサーバーを起動させるための手順は、以下のドキュメントにまとめています。
+このプロジェクトに関する詳細なガイドは、以下のドキュメントにまとめられています。
 
-**[ DEPLOYMENT.md ](./documents/DEPLOYMENT.md)**
+- **[CONTRIBUTING.md](./documents/CONTRIBUTING.md)**
+    - 開発の進め方、ブランチ戦略、コミットやPull Requestのルールなど、チームで開発するためのガイドラインです。**開発を始める前に必ずお読みください。**
 
----
+- **[DATABASE_GUIDE.md](./documents/DATABASE_GUIDE.md)**
+    - データベースの構造変更（マイグレーション）、初期データの投入（シーディング）、GUIツール（Drizzle Studio）の使い方など、データベース関連のすべての操作手順をまとめています。
 
-## 🤝 開発への貢献
-
-このプロジェクトでの開発の進め方、ブランチ戦略、Pull Requestのルールなどは、以下のドキュメントにまとめています。開発を始める前に、必ず一度目を通してください。
-
-**[ CONTRIBUTING.md ](./documents/CONTRIBUTING.md)**
+- **[DEPLOYMENT.md](./documents/DEPLOYMENT.md)**
+    - このアプリケーションをRaspberry Piの本番環境で永続化させ、OS起動時に自動でサーバーを起動させるための手順をまとめています。

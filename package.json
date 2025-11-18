@@ -12,6 +12,7 @@
         "db:generate": "npm run generate -w @andolab-shop/db-schema",
         "db:migrate": "npm run migrate -w @andolab-shop/db-schema",
         "db:seed": "npm run seed -w @andolab-shop/db-schema",
+        "db:studio": "npm run studio -w @andolab-shop/db-schema",
         "test": "echo \"Error: no test specified\" && exit 1",
         "lint": "eslint . --ext .ts,.tsx",
         "format": "prettier --write .",
@@ -26,15 +27,14 @@
     "devDependencies": {
         "@commitlint/cli": "^20.1.0",
         "@commitlint/config-conventional": "^20.0.0",
-        "@typescript-eslint/eslint-plugin": "^8.46.4",
-        "@typescript-eslint/parser": "^8.46.4",
         "eslint": "^9.39.1",
         "eslint-config-prettier": "^10.1.8",
         "eslint-plugin-react": "^7.37.5",
         "husky": "^9.1.7",
         "lint-staged": "^16.2.6",
         "npm-run-all": "^4.1.5",
-        "prettier": "^3.6.2"
+        "prettier": "^3.6.2",
+        "typescript-eslint": "^8.47.0"
     },
     "lint-staged": {
         "packages/**/*.{ts,tsx}": [
@@ -44,5 +44,9 @@
         "*.{json,md,css}": [
             "prettier --write"
         ]
+    },
+    "dependencies": {
+        "drizzle-kit": "^0.31.7",
+        "drizzle-orm": "^0.44.7"
     }
 }

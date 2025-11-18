@@ -1,5 +1,5 @@
 import { serve } from '@hono/node-server';
-import { db, users } from '@andolab-shop/db-schema';
+import { db, products } from '@andolab-shop/db-schema';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 
@@ -14,26 +14,13 @@ app.use(
     }),
 );
 
-// GET /user: 全ユーザーを取得するAPI
-app.get('/api/users', async (c) => {
-    const allUsers = await db.select().from(users).all();
-    return c.json(allUsers);
+// GET /products: 全商品を取得するAPI
+app.get('/api/products', async (c) => {
+    const allProducts = await db.select().from(products).all();
+    return c.json(allProducts);
 });
 
-// POST /user: テストデータを追加するAPI
-app.post('/api/users', async (c) => {
-    await db
-        .insert(users)
-        .values([
-            { name: 'Alice', email: 'alice@example.com' },
-            { name: 'Bob', email: 'bob@example.com' },
-        ])
-        .onConflictDoNothing()
-        .run();
-    return c.json({ message: 'Test data inserted' }, 201);
-});
-
-const port = 3000;
+const port = 3001;
 console.log(`Server is running on port ${port}`);
 
 serve({
