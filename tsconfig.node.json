@@ -1,0 +1,17 @@
+{
+    // プロジェクトの基本的なTypeScript設定を継承
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+        // 他のtsconfigから参照されるために必須
+        "composite": true,
+        // Node.jsのES Modulesと互換性のある設定
+        "module": "ESNext",
+        "moduleResolution": "Node"
+    },
+    // このtsconfigが対象とするファイルを明示
+    "include": [
+        "eslint.config.js",
+        "commitlint.config.js"
+        // 他にルートに設定ファイルがあればここに追加
+    ]
+}
