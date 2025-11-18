@@ -16,8 +16,8 @@
 
 ### 1. タスクの起票 (Creating an Issue)
 
-- **すべての作業はIssueから:** 新機能の追加、バグ修正、ドキュメントの更新など、いかなる作業も、まずは[リポジトリのIssuesタブ](./issues)でIssueを作成することから始めます。
-- **Issueの作成後:** 作成されたIssueは、自動的に[GitHub Projects](./projects)の`Backlog`カラムに追加されます。
+- **すべての作業はIssueから:** 新機能の追加、バグ修正、ドキュメントの更新など、いかなる作業も、まずは[リポジトリのIssuesタブ](https://github.com/ipon1207/andolab-shop/issues)でIssueを作成することから始めます。
+- **Issueの作成後:** 作成されたIssueは、自動的に[GitHub Projects](https://github.com/users/ipon1207/projects/3)の`Backlog`カラムに追加されます。
 
 ### 2. 開発の開始 (Starting Development)
 
