@@ -8,7 +8,7 @@ const app = new Hono();
 app.use(
     '/api/*',
     cors({
-        origin: 'http://localhost:8080',
+        origin: ['http://localhost:8080', 'http://127.0.0.1:5173'], // DevContainer用に追加
         allowHeaders: ['Content-Type', 'Authorization'],
         allowMethods: ['POST', 'GET', 'OPTIONS'],
     }),
@@ -17,10 +17,11 @@ app.use(
 // GET /products: 全商品を取得するAPI
 app.get('/api/products', async (c) => {
     const allProducts = await db.select().from(products).all();
+    // console.log('Fetched products:', allProducts);
     return c.json(allProducts);
 });
 
-const port = 3001;
+const port = 3000;
 console.log(`Server is running on port ${port}`);
 
 serve({
