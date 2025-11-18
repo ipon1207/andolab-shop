@@ -128,4 +128,4 @@
 
 このプロジェクトでの開発の進め方、ブランチ戦略、Pull Requestのルールなどは、以下のドキュメントにまとめています。開発を始める前に、必ず一度目を通してください。
 
-**[ CONTRIBUTING.md ](./CONTRIBUTING.md)**
+**[ CONTRIBUTING.md ](./documents/CONTRIBUTING.md)**
