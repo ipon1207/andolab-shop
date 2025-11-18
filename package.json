@@ -11,6 +11,7 @@
         "start": "node packages/backend/dist/index.js",
         "db:generate": "npm run generate -w @andolab-shop/db-schema",
         "db:migrate": "npm run migrate -w @andolab-shop/db-schema",
+        "db:seed": "npm run seed -w @andolab-shop/db-schema",
         "test": "echo \"Error: no test specified\" && exit 1",
         "lint": "eslint . --ext .ts,.tsx",
         "format": "prettier --write ."
