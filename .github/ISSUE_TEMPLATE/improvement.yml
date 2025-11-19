@@ -1,0 +1,22 @@
+name: 🔧 改善・リファクタリング (Improvement)
+description: コードの整理、ドキュメント更新、ライブラリ更新など
+title: "[Impr]: "
+labels: ["documentation", "refactor"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: 改善したい内容
+      description: 何を、どのように改善したいですか？
+      placeholder: 例: `CONTRIBUTING.md` に、新しいブランチの命名規則を追記したい。
+    validations:
+      required: true
+
+  - type: textarea
+    id: reason
+    attributes:
+      label: 理由・メリット
+      description: なぜこの改善が必要ですか？
+      placeholder: 例: 開発ルールが変更されたが、ドキュメントが古いままになっているため。
+    validations:
+      required: true
