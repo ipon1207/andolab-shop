@@ -1,5 +1,0 @@
-blank_issues_enabled: false # テンプレートを使わない「空白のIssue」作成を禁止する
-contact_links:
-    - name: 💬 質問・ディスカッション
-      url: https://github.com/andolab/andolab-shop/discussions
-      about: バグや機能追加ではなく、単なる質問やアイデアの相談はこちらへどうぞ。
