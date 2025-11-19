@@ -15,7 +15,21 @@ export const products = sqliteTable('products', {
         .default(false),
 });
 
-// データの挿入用スキーマ
+// purchaseLogsテーブル
+export const purchaseLogs = sqliteTable('purchase_logs', {
+    logId: integer('log_id').primaryKey({ autoIncrement: true }),
+    productId: integer('product_id')
+        .references(() => products.productId)
+        .notNull(),
+    soldAt: integer('sold_at', { mode: 'timestamp' }).notNull(),
+    soldPrice: integer('sold_price').notNull(),
+});
+
+// productsテーブルデータの挿入用スキーマ
 export const insertProductSchema = createInsertSchema(products);
-// データ取得用スキーマ
+// productsテーブルデータ取得用スキーマ
 export const selectProductSchema = createSelectSchema(products);
+// purchaseLogsテーブルデータの挿入用スキーマ
+export const insertPurchaseLogSchema = createInsertSchema(purchaseLogs);
+// purchaseLogsテーブルデータ取得用スキーマ
+export const selectPurchaseLogSchema = createSelectSchema(purchaseLogs);
