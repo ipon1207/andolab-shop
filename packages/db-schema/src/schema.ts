@@ -1,5 +1,6 @@
 // --- テーブルスキーマの定義 ---
 import { sqliteTable, integer, text } from 'drizzle-orm/sqlite-core';
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 
 // productsテーブル
 export const products = sqliteTable('products', {
@@ -13,3 +14,8 @@ export const products = sqliteTable('products', {
         .notNull()
         .default(false),
 });
+
+// データの挿入用スキーマ
+export const insertProductSchema = createInsertSchema(products);
+// データ取得用スキーマ
+export const selectProductSchema = createSelectSchema(products);
