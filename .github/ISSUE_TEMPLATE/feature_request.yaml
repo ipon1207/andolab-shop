@@ -1,47 +1,47 @@
 name: 🚀 機能追加 (Feature Request)
 description: 新しい機能のアイデアや提案はこちら
-title: "[Feature]: "
-labels: ["enhancement"]
+title: '[Feature]: '
+labels: ['enhancement']
 body:
-  - type: markdown
-    attributes:
-      value: |
-        新機能の提案ありがとうございます！
-        開発をスムーズに進めるために、以下の項目を埋めてください。
+    - type: markdown
+      attributes:
+          value: |
+              新機能の提案ありがとうございます！
+              開発をスムーズに進めるために、以下の項目を埋めてください。
 
-  - type: textarea
-    id: description
-    attributes:
-      label: どのような機能ですか？
-      description: 実現したい機能の概要を簡潔に教えてください。
-      placeholder: 例: 商品一覧画面に、価格順で並び替える機能を追加したい。
-    validations:
-      required: true
+    - type: textarea
+      id: description
+      attributes:
+          label: どのような機能ですか？
+          description: 実現したい機能の概要を簡潔に教えてください。
+          placeholder: 例 商品一覧画面に、価格順で並び替える機能を追加したい。
+      validations:
+          required: true
 
-  - type: textarea
-    id: problem
-    attributes:
-      label: 解決したい課題・背景
-      description: なぜこの機能が必要なのですか？ 現在困っていることはありますか？
-      placeholder: 例: 商品数が増えてきて、安い商品を探すのが大変になっているため。
-    validations:
-      required: true
+    - type: textarea
+      id: problem
+      attributes:
+          label: 解決したい課題・背景
+          description: なぜこの機能が必要なのですか？ 現在困っていることはありますか？
+          placeholder: 例 商品数が増えてきて、安い商品を探すのが大変になっているため。
+      validations:
+          required: true
 
-  - type: textarea
-    id: solution
-    attributes:
-      label: 実装イメージ（あれば）
-      description: 画面のイメージ図や、具体的な挙動のアイデアがあれば教えてください。
-    validations:
-      required: false
+    - type: textarea
+      id: solution
+      attributes:
+          label: 実装イメージ（あれば）
+          description: 画面のイメージ図や、具体的な挙動のアイデアがあれば教えてください。
+      validations:
+          required: false
 
-  - type: dropdown
-    id: priority
-    attributes:
-      label: 優先度
-      options:
-        - 高 (すぐに欲しい)
-        - 中 (なるべく早く)
-        - 低 (余裕があれば)
-    validations:
-      required: true
+    - type: dropdown
+      id: priority
+      attributes:
+          label: 優先度
+          options:
+              - 高 (すぐに欲しい)
+              - 中 (なるべく早く)
+              - 低 (余裕があれば)
+      validations:
+          required: true
