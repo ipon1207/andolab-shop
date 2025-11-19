@@ -1,4 +1,4 @@
-import { db, products } from '.';
+import { db, products, purchaseLogs } from '.';
 
 // 開発用の初期データを投入する関数
 async function main() {
@@ -21,12 +21,22 @@ async function main() {
             isDeleted: false,
         },
     ];
-
     // --- 3. 初期データの投入 ---
     console.log('📝 Inserting new seed data...');
-    await db.insert(products).values(testProducts);
-    // 他にテーブルがあれば、ここに追加
-    // await db.insert(products).values(testProducts);
+    const returnIds = await db
+        .insert(products)
+        .values(testProducts)
+        .returning({ productId: products.productId });
+
+    const testPurchaseLogs = [
+        {
+            productId: returnIds[0].productId,
+            soldAt: new Date('2024-01-01T10:00:00Z'),
+            soldPrice: 900,
+        },
+    ];
+
+    await db.insert(purchaseLogs).values(testPurchaseLogs);
 
     console.log('✅ Database seeding completed.');
 }
