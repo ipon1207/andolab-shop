@@ -38,15 +38,16 @@
 
 ## 🛠️ 技術スタック
 
-| カテゴリ           | 技術                                                                                                                                                                   |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **モノレポ管理**   | [npm Workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces)                                                                                                   |
-| **フロントエンド** | [React](https://react.dev/), [Vite](https://vitejs.dev/), [TypeScript](https://www.typescriptlang.org/), [Tailwind CSS](https://tailwindcss.com/)                      |
-| **バックエンド**   | [Hono](https://hono.dev/), [TypeScript](https://www.typescriptlang.org/)                                                                                               |
-| **データベース**   | [SQLite](https://www.sqlite.org/index.html)                                                                                                                            |
-| **ORM**            | [Drizzle ORM](https://orm.drizzle.team/)                                                                                                                               |
-| **コード品質**     | [ESLint](https://eslint.org/), [Prettier](https://prettier.io/), [husky](https://typicode.github.io/husky/), [lint-staged](https://github.com/lint-staged/lint-staged) |
-| **実行環境**       | [Node.js](https://nodejs.org/), Raspberry Pi 4 Model B                                                                                                                 |
+| カテゴリ            | 技術                                                                                                                                                                   |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **モノレポ管理**    | [npm Workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces)                                                                                                   |
+| **フロントエンド**  | [React](https://react.dev/), [Vite](https://vitejs.dev/), [TypeScript](https://www.typescriptlang.org/), [Tailwind CSS](https://tailwindcss.com/)                      |
+| **バックエンド**    | [Hono](https://hono.dev/), [TypeScript](https://www.typescriptlang.org/)                                                                                               |
+| **データベース**    | [SQLite](https://www.sqlite.org/index.html)                                                                                                                            |
+| **ORM**             | [Drizzle ORM](https://orm.drizzle.team/)                                                                                                                               |
+| **スキーマ / 検証** | [Zod](https://zod.dev/)                                                                                                                                                |
+| **コード品質**      | [ESLint](https://eslint.org/), [Prettier](https://prettier.io/), [husky](https://typicode.github.io/husky/), [lint-staged](https://github.com/lint-staged/lint-staged) |
+| **実行環境**        | [Node.js](https://nodejs.org/), Raspberry Pi 4 Model B                                                                                                                 |
 
 ---
 

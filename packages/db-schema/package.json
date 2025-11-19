@@ -24,6 +24,8 @@
         "zod-to-drizzle": "^0.0.2"
     },
     "dependencies": {
-        "better-sqlite3": "^12.4.1"
+        "better-sqlite3": "^12.4.1",
+        "drizzle-zod": "^0.8.3",
+        "zod": "^4.1.12"
     }
 }
