@@ -31,6 +31,14 @@ async function main() {
             janCode: '4902102141215',
             isDeleted: false,
         },
+        {
+            productName: 'Red Bull',
+            price: 160,
+            type: '飲み物',
+            stock: 7,
+            janCode: '4560292290016',
+            isDeleted: false,
+        },
     ];
     // --- 3. 初期データの投入 ---
     console.log('📝 Inserting new seed data...');

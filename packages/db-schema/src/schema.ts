@@ -1,6 +1,7 @@
 // --- テーブルスキーマの定義 ---
 import { sqliteTable, integer, text } from 'drizzle-orm/sqlite-core';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
+import z from 'zod';
 
 // productsテーブル
 export const products = sqliteTable('products', {
@@ -33,3 +34,8 @@ export const selectProductSchema = createSelectSchema(products);
 export const insertPurchaseLogSchema = createInsertSchema(purchaseLogs);
 // purchaseLogsテーブルデータ取得用スキーマ
 export const selectPurchaseLogSchema = createSelectSchema(purchaseLogs);
+
+// Product型の定義
+export type Product = z.infer<typeof selectProductSchema>;
+// PurchaseLog型の定義
+export type PurchaseLog = z.infer<typeof selectPurchaseLogSchema>;
