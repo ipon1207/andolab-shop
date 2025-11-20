@@ -1,15 +1,17 @@
 {
     "compilerOptions": {
-      "target": "ES2022",
-      "module": "ESNext",
-      "moduleResolution": "Bundler",
-      "forceConsistentCasingInFileNames": true,
-      "strict": true,
-      "skipLibCheck": true,
-      "baseUrl": ".",
-      "paths": {
-        "@my-app/shared/*": ["packages/shared/src/*"],
-        "@my-app/db-schema/*": ["packages/db-schema/src/*"]
-      },
+        "target": "ES2022",
+        "module": "ESNext",
+        "moduleResolution": "Bundler",
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        "skipLibCheck": true,
+        "baseUrl": ".",
+        "paths": {
+            "@andolab-shop/shared": ["packages/shared/src/index.ts"],
+            "@andolab-shop/shared/*": ["packages/shared/src/*"],
+            "@andolab-shop/db-schema": ["packages/db-schema/src/index.ts"],
+            "@andolab-shop/db-schema/*": ["packages/db-schema/src/*"]
+        }
     }
 }
