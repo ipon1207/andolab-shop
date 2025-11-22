@@ -8,8 +8,8 @@ export const purchaseSchema = z.object({
 // 購入処理APIのレスポンス型
 export const productResponseSchema = z.object({
     productId: z.number(),
-    janCode: z.string(),
-    productName: z.string(),
+    janCode: z.string().nullable(),
+    name: z.string(),
     price: z.number(),
     stock: z.number(),
 });

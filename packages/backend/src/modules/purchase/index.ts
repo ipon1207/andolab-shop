@@ -1,10 +1,25 @@
-import { productResponseSchema, purchaseSchema } from '@andolab-shop/shared';
+import {
+    ProductResponseData,
+    productResponseSchema,
+    purchaseSchema,
+} from '@andolab-shop/shared';
 import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
 import { purchaseService } from './service';
 import { DomainError } from '../../core/errors';
+import { Product } from '@andolab-shop/db-schema';
 
 const app = new Hono();
+
+const toProductResponse = (product: Product): ProductResponseData => {
+    return {
+        productId: product.productId,
+        janCode: product.janCode,
+        name: product.productName,
+        price: product.price,
+        stock: product.stock,
+    };
+};
 
 export const purchaseRouter = app.post(
     '/',
@@ -17,7 +32,8 @@ export const purchaseRouter = app.post(
         const { janCode } = c.req.valid('json');
         try {
             const product = purchaseService.purchase(janCode);
-            const parsed = productResponseSchema.parse(product);
+            const response = toProductResponse(product);
+            const parsed = productResponseSchema.parse(response);
             return c.json({ product: parsed });
         } catch (e) {
             if (e instanceof DomainError) {
