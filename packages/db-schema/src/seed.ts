@@ -1,3 +1,4 @@
+import { sql } from 'drizzle-orm';
 import { db, products, purchaseLogs } from '.';
 
 // 開発用の初期データを投入する関数
@@ -6,9 +7,11 @@ async function main() {
 
     // --- 1. 既存データのクリーンアップ（本番環境では絶対に使用しない）---
     console.log('Deleting existing data...');
+    await db.delete(purchaseLogs);
     await db.delete(products);
+    await db.run(sql`DELETE FROM sqlite_sequence WHERE name = 'products'`);
+    await db.run(sql`DELETE FROM sqlite_sequence WHERE name = 'purchase_logs'`);
     // 他にテーブルがあれば、ここに追加
-    // await db.delete(products);
 
     // --- 2. 初期データの定義 ---
     const testProducts = [
@@ -18,6 +21,22 @@ async function main() {
             type: 'お菓子',
             stock: 9999,
             janCode: '1234567890123',
+            isDeleted: false,
+        },
+        {
+            productName: 'やかんの麦茶',
+            price: 100,
+            type: '飲み物',
+            stock: 4,
+            janCode: '4902102141215',
+            isDeleted: false,
+        },
+        {
+            productName: 'Red Bull',
+            price: 160,
+            type: '飲み物',
+            stock: 7,
+            janCode: '4560292290016',
             isDeleted: false,
         },
     ];

@@ -1,7 +1,10 @@
 import { useRef, useState } from 'react';
+import { client } from './api';
 
 function PurchagePage() {
+    // 入力フォームの状態管理
     const inputRef = useRef<HTMLInputElement>(null);
+    // バーコードの状態管理
     const [janCode, setJanCode] = useState<string>('');
 
     // 入力フォームにフォーカスを常に当てる
@@ -15,10 +18,26 @@ function PurchagePage() {
     };
 
     // バーコード読み取り完了処理
-    const enterBarcode = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const enterBarcode = async (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             console.log('バーコードが読み取られました:', janCode);
-            setJanCode('');
+            // デフォルトの挙動を防止
+            e.preventDefault();
+
+            try {
+                const res = await client.api.purchase.$post({
+                    json: { janCode: janCode },
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    console.log('購入成功:', data[0]);
+                }
+            } catch (error) {
+                console.error('購入処理中にエラーが発生しました', error);
+            } finally {
+                setJanCode('');
+            }
         }
     };
 
