@@ -12,7 +12,7 @@ export const purchaseRepository = {
             .select()
             .from(products)
             .where(eq(products.janCode, janCode))
-            .all();
+            .get();
     },
     // 在庫を減らす
     decreaseStock: (productId: number, tx: DbOrTx) => {
