@@ -3,8 +3,8 @@ import { db, products, purchaseLogs } from '@andolab-shop/db-schema';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { zValidator } from '@hono/zod-validator';
-import { eq } from 'drizzle-orm';
-import { purchaseSchema, setPurchaseLogSchema } from '@andolab-shop/shared/src';
+import { eq, sql } from 'drizzle-orm';
+import { purchaseSchema } from '@andolab-shop/shared/src';
 
 const app = new Hono();
 
@@ -17,7 +17,7 @@ app.use(
     }),
 );
 
-// productsテーブルのstockを1減らし、該当商品の情報を返すAPIエンドポイント
+// productsテーブルのstockを1減らし、purchaseLogsテーブルに購入履歴を挿入するAPIエンドポイント
 app.post(
     '/api/purchase',
     zValidator('json', purchaseSchema, (result, c) => {
@@ -27,43 +27,38 @@ app.post(
     }),
     async (c) => {
         const data = c.req.valid('json');
-        const result = await db
-            .select()
-            .from(products)
-            .where(eq(products.janCode, data.janCode));
-        if (result.length === 0) {
-            return c.json({ message: '未登録の商品です' }, 404);
-        }
-        if (!result[0].stock || result[0].stock <= 0) {
-            return c.json({ message: '在庫が不足しています' }, 400);
-        }
-        await db
-            .update(products)
-            .set({ stock: result[0].stock - 1 })
-            .where(eq(products.productId, result[0].productId));
-        return c.json(result);
-    },
-);
 
-// productIdとpriceを受け取り、purchaseLogsテーブルに購入履歴を追加するAPIエンドポイント
-app.post(
-    '/api/setPurchaseLog',
-    zValidator('json', setPurchaseLogSchema, (result, c) => {
-        if (!result.success) {
-            return c.json({ error: 'Invalid data', errors: result.error }, 400);
+        try {
+            const result = await db.transaction(async (tx) => {
+                // janCodeから商品を検索
+                const targetProduct = await tx
+                    .select()
+                    .from(products)
+                    .where(eq(products.janCode, data.janCode));
+                // 商品が存在しない or 在庫がない場合の処理
+                if (targetProduct.length === 0 || targetProduct[0].stock <= 0) {
+                    throw new Error('NOT_FOUND_OR_NO_STOCK');
+                }
+                // 在庫を減らす
+                await tx
+                    .update(products)
+                    .set({ stock: sql`${products.stock} - 1` })
+                    .where(eq(products.productId, targetProduct[0].productId));
+                // purchaseLogsテーブルに購入履歴を挿入
+                await tx.insert(purchaseLogs).values({
+                    productId: targetProduct[0].productId,
+                    soldAt: new Date(),
+                    soldPrice: targetProduct[0].price,
+                });
+                return targetProduct;
+            });
+            return c.json(result);
+        } catch (e: unknown) {
+            if (e instanceof Error) {
+                console.error(e.message);
+            }
+            return c.json({ message: '購入処理に失敗しました' }, 400);
         }
-    }),
-    async (c) => {
-        const data = c.req.valid('json');
-        const result = await db
-            .insert(purchaseLogs)
-            .values({
-                productId: data.productId,
-                soldAt: new Date(),
-                soldPrice: data.price,
-            })
-            .returning();
-        return c.json(result);
     },
 );
 
