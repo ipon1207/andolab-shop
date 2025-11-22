@@ -1,47 +1,43 @@
-import React, { useRef, useState } from 'react';
+import { ProductResponseData } from '@andolab-shop/shared';
+import { useState } from 'react';
 import { purchaseRepository } from '../api/repository';
 
 export const usePurchase = () => {
-    const inputRef = useRef<HTMLInputElement>(null);
-    const [janCode, setJanCode] = useState<string>('');
+    const [lastProduct, setLastProduct] = useState<ProductResponseData | null>(
+        null,
+    );
+    const [isProcessing, setIsProcessing] = useState(false);
 
-    // inputフォームにフォーカスを当てる
-    const focusInput = () => {
-        inputRef.current?.focus();
-    };
-
-    // バーコードの入力値処理
-    const reacBarCode = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setJanCode(e.target.value);
-    };
-
-    // 購入実行（Enterキー押下時）
     const executePurchase = async (
-        e: React.KeyboardEvent<HTMLInputElement>,
-    ) => {
-        if (e.key !== 'Enter') return;
+        janCode: string,
+    ): Promise<{
+        success: boolean;
+        error?: string;
+        product?: ProductResponseData;
+    }> => {
+        if (!janCode || isProcessing) {
+            return { success: false, error: 'JANコードを入力してください' };
+        }
 
-        e.preventDefault();
-        console.log('バーコードが読み取られました:', janCode);
-
+        setIsProcessing(true);
         try {
             const product = await purchaseRepository.purchase(janCode);
-            console.log('購入成功:', product);
+            setLastProduct(product);
+            return { success: true, product };
         } catch (error) {
-            console.error(error);
-            alert(
-                error instanceof Error ? error.message : 'エラーが発生しました',
-            );
+            const errorMessage =
+                error instanceof Error
+                    ? error.message
+                    : '購入処理に失敗しました';
+            return { success: false, error: errorMessage };
         } finally {
-            setJanCode('');
+            setIsProcessing(false);
         }
     };
 
     return {
-        inputRef,
-        janCode,
-        focusInput,
-        reacBarCode,
+        lastProduct,
+        isProcessing,
         executePurchase,
     };
 };
