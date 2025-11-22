@@ -1,4 +1,4 @@
-import { purchaseSchema } from '@andolab-shop/shared';
+import { productResponseSchema, purchaseSchema } from '@andolab-shop/shared';
 import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
 import { purchaseService } from './service';
@@ -14,11 +14,11 @@ export const purchaseRouter = app.post(
         }
     }),
     async (c) => {
-        const data = c.req.valid('json');
-
+        const { janCode } = c.req.valid('json');
         try {
-            const result = purchaseService.purchase(data.janCode);
-            return c.json(result);
+            const product = purchaseService.purchase(janCode);
+            const parsed = productResponseSchema.parse(product);
+            return c.json({ product: parsed });
         } catch (e) {
             if (e instanceof DomainError) {
                 switch (e.code) {
