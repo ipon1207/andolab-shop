@@ -1,15 +1,15 @@
 import z from 'zod';
 
-// /api/purchaseに送るオブジェクトのスキーマ定義
+// 購入処理のリクエストボディの型定義
 export const purchaseSchema = z.object({
     janCode: z.string(),
 });
 
-// /api/setPurchaseLogに送るオブジェクトのスキーマ定義
-export const setPurchaseLogSchema = z.object({
+// 購入履歴記録の引数の型定義
+export const logSchema = z.object({
     productId: z.number(),
     price: z.number(),
 });
 
-export type JanCode = z.infer<typeof purchaseSchema>;
-export type SetPurchaseLog = z.infer<typeof setPurchaseLogSchema>;
+export type PurchaseData = z.infer<typeof purchaseSchema>;
+export type LogData = z.infer<typeof logSchema>;
