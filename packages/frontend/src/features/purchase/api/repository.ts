@@ -1,3 +1,4 @@
+import { productResponseSchema } from '@andolab-shop/shared';
 import { client } from '../../../api';
 
 export const purchaseRepository = {
@@ -14,8 +15,11 @@ export const purchaseRepository = {
                     '購入処理に失敗しました',
             );
         }
-
-        const data = await res.json();
-        return data[0];
+        const raw = (await res.json()) as { product: unknown };
+        const parsed = productResponseSchema.safeParse(raw.product);
+        if (!parsed.success) {
+            throw new Error('不正なレスポンス形式です');
+        }
+        return parsed.data;
     },
 };

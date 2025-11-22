@@ -1,36 +1,46 @@
-import { db, products, purchaseLogs } from '@andolab-shop/db-schema';
-import { LogData } from '@andolab-shop/shared';
+import { db, Product, products, purchaseLogs } from '@andolab-shop/db-schema';
 import { eq, sql } from 'drizzle-orm';
 
-type Tx = Parameters<Parameters<typeof db.transaction>[0]>[0];
-type DbOrTx = typeof db | Tx;
+type DbOrTransaction =
+    | typeof db
+    | Parameters<Parameters<typeof db.transaction>[0]>[0];
 
-export const purchaseRepository = {
-    // 商品をJANコードで検索
-    findProductByJanCode: (janCode: string, tx: DbOrTx = db) => {
-        return tx
-            .select()
-            .from(products)
-            .where(eq(products.janCode, janCode))
-            .all();
-    },
-    // 在庫を減らす
-    decreaseStock: (productId: number, tx: DbOrTx) => {
-        return tx
-            .update(products)
-            .set({ stock: sql`${products.stock} - 1` })
-            .where(eq(products.productId, productId))
-            .run();
-    },
-    // 購入履歴を記録
-    createPurchaseLog: (logData: LogData, tx: DbOrTx) => {
-        return tx
-            .insert(purchaseLogs)
-            .values({
-                productId: logData.productId,
-                soldAt: new Date(),
-                soldPrice: logData.price,
-            })
-            .run();
-    },
+export interface PurchaseRepository {
+    findProductByJanCode(janCode: string): Product | undefined;
+    decreaseStock(productId: number): void;
+    createPurchaseLog(data: { productId: number; price: number }): void;
+}
+
+export const createPurchaseRepository = (
+    tx: DbOrTransaction,
+): PurchaseRepository => {
+    return {
+        // 商品をJANコードで検索
+        findProductByJanCode: (janCode: string) => {
+            return tx
+                .select()
+                .from(products)
+                .where(eq(products.janCode, janCode))
+                .get();
+        },
+        // 在庫を減らす
+        decreaseStock: (productId: number) => {
+            return tx
+                .update(products)
+                .set({ stock: sql`${products.stock} - 1` })
+                .where(eq(products.productId, productId))
+                .run();
+        },
+        // 購入履歴を記録
+        createPurchaseLog: ({ productId, price }) => {
+            return tx
+                .insert(purchaseLogs)
+                .values({
+                    productId,
+                    soldAt: new Date(),
+                    soldPrice: price,
+                })
+                .run();
+        },
+    };
 };

@@ -1,9 +1,25 @@
-import { purchaseSchema } from '@andolab-shop/shared';
+import {
+    ProductResponseData,
+    productResponseSchema,
+    purchaseSchema,
+} from '@andolab-shop/shared';
 import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
 import { purchaseService } from './service';
+import { DomainError } from '../../core/errors';
+import { Product } from '@andolab-shop/db-schema';
 
 const app = new Hono();
+
+const toProductResponse = (product: Product): ProductResponseData => {
+    return {
+        productId: product.productId,
+        janCode: product.janCode,
+        name: product.productName,
+        price: product.price,
+        stock: product.stock,
+    };
+};
 
 export const purchaseRouter = app.post(
     '/',
@@ -13,20 +29,20 @@ export const purchaseRouter = app.post(
         }
     }),
     async (c) => {
-        const data = c.req.valid('json');
-
+        const { janCode } = c.req.valid('json');
         try {
-            const result = purchaseService.purchase(data.janCode);
-            return c.json(result);
-        } catch (e: unknown) {
-            if (e instanceof Error) {
-                if (e.message === 'NOT_FOUND_OR_NO_STOCK') {
-                    return c.json(
-                        { message: '商品が見つからないか、在庫切れです' },
-                        400,
-                    );
+            const product = purchaseService.purchase(janCode);
+            const response = toProductResponse(product);
+            const parsed = productResponseSchema.parse(response);
+            return c.json({ product: parsed });
+        } catch (e) {
+            if (e instanceof DomainError) {
+                switch (e.code) {
+                    case 'NOT_FOUND':
+                        return c.json({ message: '商品が見つかりません' }, 404);
+                    case 'NO_STOCK':
+                        return c.json({ message: '在庫が不足しています' }, 409);
                 }
-                console.log(e.message);
             }
             return c.json({ message: '購入処理に失敗しました' }, 500);
         }
