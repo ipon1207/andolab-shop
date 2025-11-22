@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import type { Product } from '@andolab-shop/db-schema/schema';
+import { client } from './api';
 
 function PurchagePage() {
     // 入力フォームの状態管理
@@ -25,40 +25,13 @@ function PurchagePage() {
             e.preventDefault();
 
             try {
-                const response = await fetch(
-                    'http://localhost:3000/api/purchase',
-                    {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ janCode: janCode }),
-                    },
-                );
+                const res = await client.api.purchase.$post({
+                    json: { janCode: janCode },
+                });
 
-                if (response.ok) {
-                    console.log('購入が正常に行われました');
-                    const data: Product[] = await response.json();
-                    console.log('購入データ:', data[0]);
-                    const setLogRespnse = await fetch(
-                        'http://localhost:3000/api/setPurchaseLog',
-                        {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                productId: data[0].productId,
-                                price: data[0].price,
-                            }),
-                        },
-                    );
-                    if (setLogRespnse.ok) {
-                        console.log('購入履歴の記録が正常に行われました');
-                    }
-                } else {
-                    const errorData = await response.json();
-                    console.error(errorData.message);
+                if (res.ok) {
+                    const data = await res.json();
+                    console.log('購入成功:', data[0]);
                 }
             } catch (error) {
                 console.error('購入処理中にエラーが発生しました', error);

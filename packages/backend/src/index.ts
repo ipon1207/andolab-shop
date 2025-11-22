@@ -11,14 +11,18 @@ const app = new Hono();
 app.use(
     '/api/*',
     cors({
-        origin: ['http://localhost:8080', 'http://127.0.0.1:5173'], // DevContainer用に追加
+        origin: [
+            'http://localhost:8080',
+            'http://127.0.0.1:5173',
+            'http://localhost:5173',
+        ], // DevContainer用に追加
         allowHeaders: ['Content-Type', 'Authorization'],
         allowMethods: ['POST', 'GET', 'OPTIONS'],
     }),
 );
 
 // productsテーブルのstockを1減らし、purchaseLogsテーブルに購入履歴を挿入するAPIエンドポイント
-app.post(
+export const routes = app.post(
     '/api/purchase',
     zValidator('json', purchaseSchema, (result, c) => {
         if (!result.success) {
@@ -29,27 +33,30 @@ app.post(
         const data = c.req.valid('json');
 
         try {
-            const result = await db.transaction(async (tx) => {
+            const result = await db.transaction((tx) => {
                 // janCodeから商品を検索
-                const targetProduct = await tx
+                const targetProduct = tx
                     .select()
                     .from(products)
-                    .where(eq(products.janCode, data.janCode));
+                    .where(eq(products.janCode, data.janCode))
+                    .all();
                 // 商品が存在しない or 在庫がない場合の処理
                 if (targetProduct.length === 0 || targetProduct[0].stock <= 0) {
                     throw new Error('NOT_FOUND_OR_NO_STOCK');
                 }
                 // 在庫を減らす
-                await tx
-                    .update(products)
+                tx.update(products)
                     .set({ stock: sql`${products.stock} - 1` })
-                    .where(eq(products.productId, targetProduct[0].productId));
+                    .where(eq(products.productId, targetProduct[0].productId))
+                    .run();
                 // purchaseLogsテーブルに購入履歴を挿入
-                await tx.insert(purchaseLogs).values({
-                    productId: targetProduct[0].productId,
-                    soldAt: new Date(),
-                    soldPrice: targetProduct[0].price,
-                });
+                tx.insert(purchaseLogs)
+                    .values({
+                        productId: targetProduct[0].productId,
+                        soldAt: new Date(),
+                        soldPrice: targetProduct[0].price,
+                    })
+                    .run();
                 return targetProduct;
             });
             return c.json(result);
@@ -69,3 +76,5 @@ serve({
     fetch: app.fetch,
     port: port,
 });
+
+export type AppType = typeof routes;
