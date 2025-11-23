@@ -1,4 +1,7 @@
-import { ProductResponseData } from '@andolab-shop/shared';
+import {
+    ProductResponseData,
+    PurchaseLogResponseData,
+} from '@andolab-shop/shared';
 import { useState } from 'react';
 import { purchaseRepository } from '../api/repository';
 
@@ -6,6 +9,8 @@ export const usePurchase = () => {
     const [lastProduct, setLastProduct] = useState<ProductResponseData | null>(
         null,
     );
+    const [lastPurchaseLog, setLastPurchaseLog] =
+        useState<PurchaseLogResponseData | null>(null);
     const [isProcessing, setIsProcessing] = useState(false);
 
     const executePurchase = async (
@@ -35,9 +40,33 @@ export const usePurchase = () => {
         }
     };
 
+    const executeCancelPurchase = async (): Promise<{
+        success: boolean;
+        error?: string;
+        purchaseLog?: PurchaseLogResponseData;
+    }> => {
+        if (isProcessing) return { success: false, error: '現在処理中です' };
+        setIsProcessing(true);
+        try {
+            const purchaseLog = await purchaseRepository.cancelPurchase();
+            setLastPurchaseLog(purchaseLog);
+            return { success: true, purchaseLog };
+        } catch (error) {
+            const errorMessage =
+                error instanceof Error
+                    ? error.message
+                    : '購入キャンセルに失敗しました';
+            return { success: false, error: errorMessage };
+        } finally {
+            setIsProcessing(false);
+        }
+    };
+
     return {
         lastProduct,
+        lastPurchaseLog,
         isProcessing,
         executePurchase,
+        executeCancelPurchase,
     };
 };
