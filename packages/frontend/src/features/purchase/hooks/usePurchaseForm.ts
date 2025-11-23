@@ -4,7 +4,13 @@ import { usePurchase } from './usePurchase';
 export const usePurchaseForm = () => {
     const inputRef = useRef<HTMLInputElement>(null);
     const [janCode, setJanCode] = useState<string>('');
-    const { lastProduct, isProcessing, executePurchase } = usePurchase();
+    const {
+        lastProduct,
+        lastPurchaseLog,
+        isProcessing,
+        executePurchase,
+        executePurchaseCancel,
+    } = usePurchase();
 
     useEffect(() => {
         inputRef.current?.focus();
@@ -33,13 +39,26 @@ export const usePurchaseForm = () => {
         }
     };
 
+    // 購入キャンセル実行
+    const handlePurchaseCancel = async () => {
+        const result = await executePurchaseCancel();
+        if (result.success) {
+            alert('購入キャンセル完了');
+            focusInput();
+        } else {
+            alert(result.error);
+        }
+    };
+
     return {
         inputRef,
         janCode,
         lastProduct,
+        lastPurchaseLog,
         isProcessing,
         focusInput,
         readBarCode,
         executePurchase: handlePurchase,
+        executePurchaseCancel: handlePurchaseCancel,
     };
 };

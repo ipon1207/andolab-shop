@@ -17,3 +17,12 @@ export class NoStockError extends DomainError {
         super('NO_STOCK', '在庫が不足しています');
     }
 }
+
+export class NotFoundCancelablePurchaseError extends DomainError {
+    constructor() {
+        super(
+            'NOT_FOUND_CANCELABLE_PURCHASE',
+            'キャンセル可能な購入履歴が見つかりません',
+        );
+    }
+}
