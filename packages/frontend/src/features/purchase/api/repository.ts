@@ -25,10 +25,9 @@ export const purchaseRepository = {
         }
         return parsed.data;
     },
+    // 購入の取り消し処理を行う
     cancelPurchase: async () => {
-        const res = await client.api.purchase.cancel.$post({
-            json: {},
-        });
+        const res = await client.api.purchase.cancel.$post();
         if (!res.ok) {
             const errorData = await res.json();
             throw new Error(

@@ -18,9 +18,9 @@ export const productResponseSchema = z.object({
 export const purchaseLogResponseSchema = z.object({
     logId: z.number(),
     productId: z.number(),
-    soldAt: z.date(),
+    soldAt: z.coerce.date(),
     soldPrice: z.number(),
-    canceledAt: z.date().nullable(),
+    canceledAt: z.coerce.date().nullable(),
 });
 
 export type PurchaseData = z.infer<typeof purchaseSchema>;
