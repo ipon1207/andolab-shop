@@ -38,6 +38,7 @@ export const purchaseService = {
             repo.increaseStock(latestLog.productId);
             // 購入履歴をキャンセル済みに更新
             repo.markAsCanceled(latestLog.logId);
+            // 消去した履歴を返す
             return latestLog;
         });
     },
