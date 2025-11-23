@@ -7,7 +7,9 @@ function PurchasePage() {
         focusInput,
         readBarCode,
         executePurchase,
+        executePurchaseCancel,
         lastProduct,
+        // lastPurchaseLog,
         isProcessing,
     } = usePurchaseForm();
     return (
@@ -26,8 +28,11 @@ function PurchasePage() {
             <div>
                 残り在庫数: <span>{lastProduct?.stock}</span>
             </div>
-            <button className="mt-4 border rounded-sm px-4 py-2 bg-red-500 text-white hover:bg-red-600">
-                {/* ToDo: 直前の購入を取り消す機能を実装 */}
+            <button
+                className="mt-4 border rounded-sm px-4 py-2 bg-red-500 text-white hover:bg-red-600"
+                onClick={executePurchaseCancel}
+                disabled={isProcessing}
+            >
                 直前の購入を取り消す
             </button>
             <input

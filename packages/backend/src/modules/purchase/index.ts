@@ -92,5 +92,6 @@ export const purchaseRouter = app
                     404,
                 );
             }
+            return c.json({ message: '購入キャンセル処理に失敗しました' }, 500);
         }
     });
