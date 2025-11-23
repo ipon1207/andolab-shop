@@ -1,0 +1,1 @@
+ALTER TABLE `purchase_logs` ADD `canceled_at` integer;

@@ -24,7 +24,7 @@ export const purchaseLogs = sqliteTable('purchase_logs', {
         .notNull(),
     soldAt: integer('sold_at', { mode: 'timestamp' }).notNull(),
     soldPrice: integer('sold_price').notNull(),
-    canceledAt: integer('cancel_at', { mode: 'timestamp' }),
+    canceledAt: integer('canceled_at', { mode: 'timestamp' }),
 });
 
 // productsテーブルデータの挿入用スキーマ
