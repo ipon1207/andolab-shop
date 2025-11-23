@@ -1,4 +1,7 @@
-import { productResponseSchema } from '@andolab-shop/shared';
+import {
+    productResponseSchema,
+    purchaseLogResponseSchema,
+} from '@andolab-shop/shared';
 import { client } from '../../../api';
 
 export const purchaseRepository = {
@@ -17,6 +20,24 @@ export const purchaseRepository = {
         }
         const raw = (await res.json()) as { product: unknown };
         const parsed = productResponseSchema.safeParse(raw.product);
+        if (!parsed.success) {
+            throw new Error('不正なレスポンス形式です');
+        }
+        return parsed.data;
+    },
+    cancelPurchase: async () => {
+        const res = await client.api.purchase.cancel.$post({
+            json: {},
+        });
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(
+                (errorData as { message?: string }).message ||
+                    '購入キャンセルに失敗しました',
+            );
+        }
+        const raw = (await res.json()) as { purchaseLog: unknown };
+        const parsed = purchaseLogResponseSchema.safeParse(raw.purchaseLog);
         if (!parsed.success) {
             throw new Error('不正なレスポンス形式です');
         }
