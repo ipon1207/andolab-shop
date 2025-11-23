@@ -40,7 +40,7 @@ export const usePurchase = () => {
         }
     };
 
-    const executeCancelPurchase = async (): Promise<{
+    const executePurchaseCancel = async (): Promise<{
         success: boolean;
         error?: string;
         purchaseLog?: PurchaseLogResponseData;
@@ -67,6 +67,6 @@ export const usePurchase = () => {
         lastPurchaseLog,
         isProcessing,
         executePurchase,
-        executeCancelPurchase,
+        executePurchaseCancel,
     };
 };
