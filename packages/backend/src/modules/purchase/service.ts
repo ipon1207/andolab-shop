@@ -14,6 +14,7 @@ export const purchaseService = {
             if (product.stock <= 0) throw new NoStockError();
             // 在庫を更新処理
             repo.decreaseStock(product.productId);
+            product.stock -= 1;
             // 購入履歴を記録
             repo.createPurchaseLog({
                 productId: product.productId,
