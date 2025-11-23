@@ -9,6 +9,8 @@ export interface PurchaseRepository {
     findProductByJanCode(janCode: string): Product | undefined;
     decreaseStock(productId: number): void;
     createPurchaseLog(data: { productId: number; price: number }): void;
+    markAsCanceled(logId: number): void;
+    increaseStock(productId: number): void;
 }
 
 export const createPurchaseRepository = (
@@ -23,7 +25,7 @@ export const createPurchaseRepository = (
                 .where(eq(products.janCode, janCode))
                 .get();
         },
-        // 在庫を減らす
+        // 在庫を1減らす
         decreaseStock: (productId: number) => {
             return tx
                 .update(products)
@@ -40,6 +42,22 @@ export const createPurchaseRepository = (
                     soldAt: new Date(),
                     soldPrice: price,
                 })
+                .run();
+        },
+        // 購入履歴を論理削除
+        markAsCanceled: (logId: number) => {
+            return tx
+                .update(purchaseLogs)
+                .set({ cancelAt: new Date() })
+                .where(eq(purchaseLogs.logId, logId))
+                .run();
+        },
+        // 在庫を1増やす
+        increaseStock: (productId: number) => {
+            return tx
+                .update(products)
+                .set({ stock: sql`${products.stock} + 1` })
+                .where(eq(products.productId, productId))
                 .run();
         },
     };
