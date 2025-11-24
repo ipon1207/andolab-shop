@@ -27,6 +27,17 @@ export const purchaseLogs = sqliteTable('purchase_logs', {
     canceledAt: integer('canceled_at', { mode: 'timestamp' }),
 });
 
+// supplyLogsテーブル
+export const supplyLogs = sqliteTable('supply_logs', {
+    supplyId: integer('supply_id').primaryKey({ autoIncrement: true }),
+    productId: integer('product_id')
+        .references(() => products.productId)
+        .notNull(),
+    suppliedAt: integer('supplied_at', { mode: 'timestamp' }).notNull(),
+    quantity: integer('quantity').notNull(),
+    cost: integer('cost').notNull(),
+});
+
 // productsテーブルデータの挿入用スキーマ
 export const insertProductSchema = createInsertSchema(products);
 // productsテーブルデータ取得用スキーマ
@@ -35,8 +46,14 @@ export const selectProductSchema = createSelectSchema(products);
 export const insertPurchaseLogSchema = createInsertSchema(purchaseLogs);
 // purchaseLogsテーブルデータ取得用スキーマ
 export const selectPurchaseLogSchema = createSelectSchema(purchaseLogs);
+// supplyLogsテーブルデータの挿入用スキーマ
+export const insertSupplyLogSchema = createInsertSchema(supplyLogs);
+// supplyLogsテーブルデータ取得用スキーマ
+export const selectSupplyLogSchema = createSelectSchema(supplyLogs);
 
 // Product型の定義
 export type Product = z.infer<typeof selectProductSchema>;
 // PurchaseLog型の定義
 export type PurchaseLog = z.infer<typeof selectPurchaseLogSchema>;
+// SupplyLog型の定義
+export type SupplyLog = z.infer<typeof selectSupplyLogSchema>;

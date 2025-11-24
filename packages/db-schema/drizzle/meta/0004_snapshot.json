@@ -1,0 +1,194 @@
+{
+    "version": "6",
+    "dialect": "sqlite",
+    "id": "4f7ff9b0-ce83-431e-a99e-417f79db7ed6",
+    "prevId": "d24cc7d7-1e9b-4fee-82c7-4ac207c9dd2d",
+    "tables": {
+        "products": {
+            "name": "products",
+            "columns": {
+                "product_id": {
+                    "name": "product_id",
+                    "type": "integer",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": true
+                },
+                "product_name": {
+                    "name": "product_name",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "price": {
+                    "name": "price",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "type": {
+                    "name": "type",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "stock": {
+                    "name": "stock",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "jan_code": {
+                    "name": "jan_code",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "is_deleted": {
+                    "name": "is_deleted",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": false
+                }
+            },
+            "indexes": {
+                "products_jan_code_unique": {
+                    "name": "products_jan_code_unique",
+                    "columns": ["jan_code"],
+                    "isUnique": true
+                }
+            },
+            "foreignKeys": {},
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "purchase_logs": {
+            "name": "purchase_logs",
+            "columns": {
+                "log_id": {
+                    "name": "log_id",
+                    "type": "integer",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": true
+                },
+                "product_id": {
+                    "name": "product_id",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "sold_at": {
+                    "name": "sold_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "sold_price": {
+                    "name": "sold_price",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "canceled_at": {
+                    "name": "canceled_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "purchase_logs_product_id_products_product_id_fk": {
+                    "name": "purchase_logs_product_id_products_product_id_fk",
+                    "tableFrom": "purchase_logs",
+                    "tableTo": "products",
+                    "columnsFrom": ["product_id"],
+                    "columnsTo": ["product_id"],
+                    "onDelete": "no action",
+                    "onUpdate": "no action"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "supply_logs": {
+            "name": "supply_logs",
+            "columns": {
+                "supply_id": {
+                    "name": "supply_id",
+                    "type": "integer",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": true
+                },
+                "product_id": {
+                    "name": "product_id",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "supplied_at": {
+                    "name": "supplied_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "quantity": {
+                    "name": "quantity",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "cost": {
+                    "name": "cost",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "supply_logs_product_id_products_product_id_fk": {
+                    "name": "supply_logs_product_id_products_product_id_fk",
+                    "tableFrom": "supply_logs",
+                    "tableTo": "products",
+                    "columnsFrom": ["product_id"],
+                    "columnsTo": ["product_id"],
+                    "onDelete": "no action",
+                    "onUpdate": "no action"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        }
+    },
+    "views": {},
+    "enums": {},
+    "_meta": {
+        "schemas": {},
+        "tables": {},
+        "columns": {}
+    },
+    "internal": {
+        "indexes": {}
+    }
+}
