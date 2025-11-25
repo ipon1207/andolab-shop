@@ -3,7 +3,7 @@ import {
     ProductListResponseData,
     productListSchema,
 } from '@andolab-shop/shared';
-import { client } from 'packages/frontend/src/api';
+import { client } from '../../../api';
 
 export const supplyRepository = {
     // 商品マスタ全件取得
