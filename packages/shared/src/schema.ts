@@ -23,6 +23,28 @@ export const purchaseLogResponseSchema = z.object({
     canceledAt: z.coerce.date().nullable(),
 });
 
+// 一括仕入れデータの1行分のデータ型
+export const bulkSupplyItemSchema = z.object({
+    janCode: z.string(),
+    productName: z.string(),
+    price: z.number(),
+    type: z.string(),
+});
+
+// 仕入れAPIに送るリクエストボディの型
+export const bulkSupplyRequestSchema = z.array(bulkSupplyItemSchema);
+
+// 商品一覧取得のレスポンス型（全件取得）
+export const productListSchema = z.array(
+    z.object({
+        productId: z.number(),
+        janCode: z.string().nullable(),
+        name: z.string(),
+        price: z.number(),
+        type: z.string(),
+    }),
+);
+
 export type PurchaseData = z.infer<typeof purchaseSchema>;
 export type ProductResponseData = z.infer<typeof productResponseSchema>;
 export type PurchaseLogResponseData = z.infer<typeof purchaseLogResponseSchema>;
