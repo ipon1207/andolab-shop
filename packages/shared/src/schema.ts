@@ -29,6 +29,7 @@ export const bulkSupplyItemSchema = z.object({
     productName: z.string(),
     price: z.number(),
     type: z.string(),
+    quantity: z.number(),
 });
 
 // 仕入れAPIに送るリクエストボディの型
@@ -48,3 +49,6 @@ export const productListSchema = z.array(
 export type PurchaseData = z.infer<typeof purchaseSchema>;
 export type ProductResponseData = z.infer<typeof productResponseSchema>;
 export type PurchaseLogResponseData = z.infer<typeof purchaseLogResponseSchema>;
+export type BulkSupplyitem = z.infer<typeof bulkSupplyItemSchema>;
+export type BulkSupplyRequestData = z.infer<typeof bulkSupplyRequestSchema>;
+export type ProductListResponseData = z.infer<typeof productListSchema>;

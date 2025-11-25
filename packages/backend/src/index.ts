@@ -2,6 +2,8 @@ import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { purchaseRouter } from './modules/purchase';
+import { supplyRouter } from './modules/supply';
+import { productRouter } from './modules/product';
 
 const app = new Hono();
 
@@ -18,7 +20,10 @@ app.use(
     }),
 );
 
-export const routes = app.route('/api/purchase', purchaseRouter);
+export const routes = app
+    .route('/api/purchase', purchaseRouter)
+    .route('/api/products', productRouter)
+    .route('/api/supply', supplyRouter);
 
 const port = 3000;
 console.log(`Server is running on port ${port}`);
