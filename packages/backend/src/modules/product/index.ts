@@ -15,6 +15,7 @@ export const productRouter = app.get('/', async (c) => {
             name: product.productName,
             price: product.price,
             type: product.type,
+            stock: product.stock,
         }));
         // 型チェック
         const parsed = productListSchema.parse(response);
