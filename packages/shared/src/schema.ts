@@ -43,6 +43,7 @@ export const productListSchema = z.array(
         name: z.string(),
         price: z.number(),
         type: z.string(),
+        stock: z.number(),
     }),
 );
 
