@@ -5,6 +5,11 @@ import { supplyRepository } from '../api/repository';
 // 画面表示用に、BulkSupplyItemにid（一時的な行ID）をつけた型を定義
 type SupplyRow = BulkSupplyitem & { id: string };
 
+// ID生成関数
+const generateId = () => {
+    return Math.random().toString(36).substring(2) + Date.now().toString(26);
+};
+
 export const useSupply = () => {
     const [allProducts, setAllProducts] = useState<ProductListResponseData>([]);
     const [supplyList, setSupplyList] = useState<SupplyRow[]>([]);
@@ -29,7 +34,7 @@ export const useSupply = () => {
         setSupplyList((prev) => [
             ...prev,
             {
-                id: crypto.randomUUID(), // 一意なID
+                id: generateId(), // 一意なID
                 janCode: '',
                 productName: '',
                 price: 0,
