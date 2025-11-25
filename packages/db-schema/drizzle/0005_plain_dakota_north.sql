@@ -1,0 +1,1 @@
+ALTER TABLE `supply_logs` DROP COLUMN `cost`;

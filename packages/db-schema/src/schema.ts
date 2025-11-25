@@ -35,7 +35,6 @@ export const supplyLogs = sqliteTable('supply_logs', {
         .notNull(),
     suppliedAt: integer('supplied_at', { mode: 'timestamp' }).notNull(),
     quantity: integer('quantity').notNull(),
-    cost: integer('cost').notNull(),
 });
 
 // productsテーブルデータの挿入用スキーマ
