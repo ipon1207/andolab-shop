@@ -31,7 +31,6 @@ export const usePurchaseForm = () => {
         const result = await executePurchase(janCode);
 
         if (result.success) {
-            alert(`購入完了: ${result.product?.name}`);
             setJanCode('');
             focusInput();
         } else {
