@@ -2,6 +2,7 @@ import { useSupply } from '../hooks/useSupply';
 
 export const SupplyPage = () => {
     const {
+        allProducts,
         supplyList,
         isProcessing,
         addRow,
@@ -74,7 +75,8 @@ export const SupplyPage = () => {
                                                     e.target.value,
                                                 )
                                             }
-                                            placeholder="スキャン"
+                                            list="product-suggestions"
+                                            placeholder="スキャン / 商品名"
                                             className="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-1 border"
                                         />
                                     </td>
@@ -169,6 +171,17 @@ export const SupplyPage = () => {
                         </tbody>
                     </table>
                 </div>
+
+                <datalist id="product-suggestions">
+                    {allProducts.map((product) => (
+                        <option
+                            key={product.productId}
+                            value={product.janCode || ''}
+                        >
+                            {product.name}
+                        </option>
+                    ))}
+                </datalist>
 
                 <button
                     onClick={addRow}
