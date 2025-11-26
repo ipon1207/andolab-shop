@@ -1,5 +1,5 @@
 import { BulkSupplyitem, ProductListResponseData } from '@andolab-shop/shared';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { supplyRepository } from '../api/repository';
 
 // 画面表示用に、BulkSupplyItemにid（一時的な行ID）をつけた型を定義
@@ -15,19 +15,20 @@ export const useSupply = () => {
     const [supplyList, setSupplyList] = useState<SupplyRow[]>([]);
     const [isProcessing, setIsProcessing] = useState(false);
 
+    // 商品マスタを取得する関数
+    const fetchLatestProducts = useCallback(async () => {
+        try {
+            const products = await supplyRepository.fetchAllProducts();
+            setAllProducts(products);
+        } catch (e) {
+            console.error(e);
+        }
+    }, []);
+
     // 初回ロード時に全商品を取得
     useEffect(() => {
-        const loadProducts = async () => {
-            try {
-                const products = await supplyRepository.fetchAllProducts();
-                setAllProducts(products);
-            } catch (e) {
-                alert('商品マスタの取得に失敗しました');
-                console.error(e);
-            }
-        };
-        loadProducts();
-    }, []);
+        fetchLatestProducts();
+    }, [fetchLatestProducts]);
 
     // 行を追加する関数
     const addRow = () => {
@@ -105,6 +106,7 @@ export const useSupply = () => {
             alert(res.message);
             // 登録成功後、仕入れリストをクリア
             setSupplyList([]);
+            await fetchLatestProducts();
         } catch (e) {
             alert(e instanceof Error ? e.message : 'エラーが発生しました');
         } finally {
