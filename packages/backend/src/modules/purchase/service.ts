@@ -5,6 +5,7 @@ import {
     NotFoundCancelablePurchaseError,
     NotFoundError,
 } from '../../core/errors';
+import { sendDiscordNotification } from '../../utils/discord';
 
 export const purchaseService = {
     purchase: (janCode: string) => {
@@ -19,6 +20,17 @@ export const purchaseService = {
             // 在庫を更新処理
             repo.decreaseStock(product.productId);
             product.stock -= 1;
+
+            // Discord通知
+            if (product.stock === 0) {
+                sendDiscordNotification(
+                    `🚨 **在庫切れ！**\n商品名: ${product.productName} が売り切れました。補充してください！`,
+                );
+            } else if (product.stock === 5) {
+                sendDiscordNotification(
+                    `⚠️ **在庫わずか**\n商品名: ${product.productName} の残りが 5個 になりました!`,
+                );
+            }
             // 購入履歴を記録
             repo.createPurchaseLog({
                 productId: product.productId,
