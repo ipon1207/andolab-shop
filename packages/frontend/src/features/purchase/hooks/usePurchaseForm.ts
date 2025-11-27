@@ -14,12 +14,16 @@ export const usePurchaseForm = () => {
     } = usePurchase();
 
     useEffect(() => {
-        inputRef.current?.focus();
+        setTimeout(() => {
+            inputRef.current?.focus();
+        }, 0);
     }, []);
 
     // inputフォームにフォーカスを当てる
     const focusInput = () => {
-        inputRef.current?.focus();
+        setTimeout(() => {
+            inputRef.current?.focus();
+        }, 0);
     };
 
     // バーコードの入力値処理
@@ -37,6 +41,7 @@ export const usePurchaseForm = () => {
             focusInput();
         } else {
             alert(result.error);
+            focusInput();
         }
     };
 
@@ -48,6 +53,7 @@ export const usePurchaseForm = () => {
             focusInput();
         } else {
             alert(result.error);
+            focusInput();
         }
     };
 
