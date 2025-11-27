@@ -123,7 +123,10 @@ function PurchasePage() {
             {/* カタログモーダル */}
             <CatalogModal
                 isOpen={catalog.isOpen}
-                onClose={catalog.close}
+                onClose={() => {
+                    catalog.close();
+                    focusInput();
+                }}
                 onSelect={handleSelectFromCatalog}
                 filteredProducts={catalog.filteredProducts}
                 selectedCategory={catalog.selectedCategory}
