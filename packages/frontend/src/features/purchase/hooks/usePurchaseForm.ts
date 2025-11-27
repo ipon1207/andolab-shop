@@ -13,19 +13,38 @@ export const usePurchaseForm = () => {
         executePurchaseCancel,
     } = usePurchase();
 
-    useEffect(() => {
-        setTimeout(() => {
-            inputRef.current?.focus();
-        }, 0);
-    }, []);
-
     // inputフォームにフォーカスを当てる
     const focusInput = () => {
+        inputRef.current?.focus();
         // dialogなどの要素が閉じた後にフォーカスを当てるため、少し遅延させる
         setTimeout(() => {
             inputRef.current?.focus();
         }, 50);
     };
+
+    useEffect(() => {
+        const handleGlobalMouseDown = (e: MouseEvent) => {
+            const target = e.target as HTMLElement;
+            const isInteractive = target.closest(
+                'button, input textarea, select a, [role="button"]',
+            );
+            const isSelectingText = window.getSelection()?.toString();
+            if (!isInteractive && !isSelectingText) {
+                e.preventDefault();
+                focusInput();
+            }
+        };
+        document.addEventListener('mousedown', handleGlobalMouseDown);
+        return () => {
+            document.removeEventListener('mousedown', handleGlobalMouseDown);
+        };
+    }, []);
+
+    useEffect(() => {
+        setTimeout(() => {
+            inputRef.current?.focus();
+        }, 0);
+    }, []);
 
     // バーコードの入力値処理
     const readBarCode = (e: React.ChangeEvent<HTMLInputElement>) => {
