@@ -125,7 +125,10 @@ function PurchasePage() {
                 isOpen={catalog.isOpen}
                 onClose={() => {
                     catalog.close();
-                    focusInput();
+                    // dialogが完全に閉じてからフォーカスを当てるため、少し遅延させる
+                    setTimeout(() => {
+                        focusInput();
+                    }, 100);
                 }}
                 onSelect={handleSelectFromCatalog}
                 filteredProducts={catalog.filteredProducts}
