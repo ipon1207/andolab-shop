@@ -84,10 +84,10 @@ export const useSupply = () => {
 
         // バリデーション: 空欄があるかチェック
         const hasEmpty = supplyList.some(
-            (row) => !row.janCode || !row.productName || row.quantity < 0,
+            (row) => !row.productName || row.quantity < 0,
         );
         if (hasEmpty) {
-            alert('仕入れ情報に未入力または不正な値があります');
+            alert('商品名、または個数に不備があります');
             return;
         }
 
