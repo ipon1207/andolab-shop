@@ -36,7 +36,7 @@ export const CatalogModal = ({
     return (
         <dialog
             ref={dialogRef}
-            className="w-[90vw] h-[85vh] rounded-xl shadow-2xl border-0 p-0 backdrop:bg-black/50"
+            className="w-[90vw] h-[85vh] rounded-xl shadow-2xl border-0 p-0 backdrop:bg-black/50 m-auto"
             onCancel={onClose}
         >
             <div className="flex flex-col h-full bg-slate-50">

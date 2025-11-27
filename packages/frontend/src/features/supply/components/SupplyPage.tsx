@@ -188,18 +188,20 @@ export const SupplyPage = () => {
                     ))}
                 </datalist>
 
-                <button
-                    onClick={addRow}
-                    className="w-full py-3 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 hover:border-blue-500 hover:text-blue-500 transition-colors flex items-center justify-center gap-2"
-                >
-                    <span className="text-xl">+</span> 行を追加する
-                </button>
-                <button
-                    onClick={catalog.open}
-                    className="py-3 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors flex items-center justify-center gap-2 shadow-sm"
-                >
-                    <span className="text-xl">📖</span> カタログから選ぶ
-                </button>
+                <div className="grid grid-cols-2 gap-4 mt-4">
+                    <button
+                        onClick={addRow}
+                        className="w-full py-3 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 hover:border-blue-500 hover:text-blue-500 transition-colors flex items-center justify-center gap-2"
+                    >
+                        <span className="text-xl">+</span> 行を追加する
+                    </button>
+                    <button
+                        onClick={catalog.open}
+                        className="py-3 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors flex items-center justify-center gap-2 shadow-sm"
+                    >
+                        <span className="text-xl">📖</span> カタログから選ぶ
+                    </button>
+                </div>
                 {/* ★追加: モーダルコンポーネント */}
                 <CatalogModal
                     isOpen={catalog.isOpen}
