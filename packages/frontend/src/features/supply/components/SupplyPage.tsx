@@ -1,6 +1,6 @@
 import { useSupply } from '../hooks/useSupply';
-import { CatalogModal } from './CatalogModal';
-import { useCatalog } from '../hooks/useCatalog';
+import { CatalogModal } from '../../../components/CatalogModal';
+import { useCatalog } from '../../../hooks/useCatalog';
 
 export const SupplyPage = () => {
     const {
