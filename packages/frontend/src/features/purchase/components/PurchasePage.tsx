@@ -110,11 +110,11 @@ function PurchasePage() {
             <input
                 id="barcode-input"
                 type="text"
-                className="opacity-0 absolute top-0 left-0 w-0 h-0 overflow-hidden"
+                // className="opacity-0 absolute top-0 left-0 w-0 h-0 overflow-hidden"
                 value={janCode}
                 autoFocus
                 ref={inputRef}
-                onBlur={focusInput}
+                // onBlur={focusInput}
                 onChange={readBarCode}
                 onKeyDown={(e) => {
                     if (e.key === 'Enter' && !isProcessing) executePurchase();
@@ -125,10 +125,12 @@ function PurchasePage() {
                 isOpen={catalog.isOpen}
                 onClose={() => {
                     catalog.close();
-                    // dialogが完全に閉じてからフォーカスを当てるため、少し遅延させる
-                    setTimeout(() => {
-                        focusInput();
-                    }, 100);
+                    // 1. 現在フォーカスを持っている要素（＝カタログボタン等）からフォーカスを外す
+                    if (document.activeElement instanceof HTMLElement) {
+                        document.activeElement.blur();
+                    }
+                    // 2. その上で、入力欄にフォーカスを当てる
+                    focusInput();
                 }}
                 onSelect={handleSelectFromCatalog}
                 filteredProducts={catalog.filteredProducts}
