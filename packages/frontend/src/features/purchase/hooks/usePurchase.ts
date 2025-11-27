@@ -1,8 +1,9 @@
 import {
+    ProductListResponseData,
     ProductResponseData,
     PurchaseLogResponseData,
 } from '@andolab-shop/shared';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { purchaseRepository } from '../api/repository';
 
 export const usePurchase = () => {
@@ -12,6 +13,19 @@ export const usePurchase = () => {
     const [lastPurchaseLog, setLastPurchaseLog] =
         useState<PurchaseLogResponseData | null>(null);
     const [isProcessing, setIsProcessing] = useState(false);
+    const [allProducts, setAllProducts] = useState<ProductListResponseData>([]);
+
+    useEffect(() => {
+        const loadProducts = async () => {
+            try {
+                const products = await purchaseRepository.fetchAllProducts();
+                setAllProducts(products);
+            } catch (error) {
+                console.error('商品マスタの取得に失敗しました', error);
+            }
+        };
+        loadProducts();
+    }, []);
 
     const executePurchase = async (
         janCode: string,
@@ -66,6 +80,7 @@ export const usePurchase = () => {
         lastProduct,
         lastPurchaseLog,
         isProcessing,
+        allProducts,
         executePurchase,
         executePurchaseCancel,
     };
