@@ -22,10 +22,10 @@ function PurchasePage() {
 
     const handleSelectFromCatalog = async (product: ProductResponseData) => {
         const code = product.janCode ?? '';
+        catalog.close();
         if (code) {
             await executePurchase(code);
         }
-        catalog.close();
     };
 
     return (
