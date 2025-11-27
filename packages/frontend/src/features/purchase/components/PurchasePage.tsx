@@ -1,4 +1,7 @@
+import { useCatalog } from '../../../hooks/useCatalog';
 import { usePurchaseForm } from '../hooks/usePurchaseForm';
+import { CatalogModal } from '../../../components/CatalogModal';
+import { ProductResponseData } from '@andolab-shop/shared';
 
 function PurchasePage() {
     const {
@@ -10,7 +13,20 @@ function PurchasePage() {
         executePurchaseCancel,
         lastProduct,
         isProcessing,
+        allProducts,
     } = usePurchaseForm();
+
+    const catalog = useCatalog(allProducts);
+
+    // カタログで商品が選択されたときの処理
+
+    const handleSelectFromCatalog = async (product: ProductResponseData) => {
+        const code = product.janCode ?? '';
+        if (code) {
+            await executePurchase(code);
+        }
+        catalog.close();
+    };
 
     return (
         <div className="w-full h-screen bg-slate-50 flex flex-col overflow-hidden font-sans text-slate-800">
@@ -64,22 +80,14 @@ function PurchasePage() {
             </main>
 
             {/* フッター: ステータスとアクションボタン */}
-            <footer className="p-4 bg-white border-t border-slate-200 flex justify-between items-center shrink-0">
-                <div className="flex flex-col justify-center gap-1">
-                    {/* ステータスインジケーター（ヘッダーから移動） */}
-                    <div className="flex items-center gap-2">
-                        <span
-                            className={`w-2 h-2 rounded-full ${isProcessing ? 'bg-yellow-400 animate-pulse' : 'bg-green-400'}`}
-                        ></span>
-                        <span className="text-xs text-slate-500 font-medium">
-                            {isProcessing ? '処理中...' : '稼働中'}
-                        </span>
-                    </div>
-                    {/* デバッグ用入力値表示 */}
-                    <div className="text-[10px] text-slate-300 font-mono">
-                        Input: {janCode}
-                    </div>
-                </div>
+            <footer className="p-4 bg-white border-t border-slate-200 grid grid-cols-2 gap-4 shrink-0">
+                <button
+                    onClick={catalog.open}
+                    disabled={isProcessing}
+                    className="bg-blue-600 text-white rounded-lg font-bold text-lg shadow-sm hover:bg-blue-700 active:scale-95 flex items-center justify-center gap-2"
+                >
+                    <span className="text-2xl">📖</span> 商品リスト
+                </button>
 
                 {/* 直前の購入を取り消すボタン */}
                 <button
@@ -111,6 +119,16 @@ function PurchasePage() {
                 onKeyDown={(e) => {
                     if (e.key === 'Enter' && !isProcessing) executePurchase();
                 }}
+            />
+            {/* カタログモーダル */}
+            <CatalogModal
+                isOpen={catalog.isOpen}
+                onClose={catalog.close}
+                onSelect={handleSelectFromCatalog}
+                filteredProducts={catalog.filteredProducts}
+                selectedCategory={catalog.selectedCategory}
+                onSelectCategory={catalog.selectCategory}
+                categories={catalog.categories}
             />
         </div>
     );
