@@ -110,7 +110,7 @@ function PurchasePage() {
             <input
                 id="barcode-input"
                 type="text"
-                // className="opacity-0 absolute top-0 left-0 w-0 h-0 overflow-hidden"
+                className="opacity-0 absolute top-0 left-0 w-0 h-0 overflow-hidden"
                 value={janCode}
                 autoFocus
                 ref={inputRef}
