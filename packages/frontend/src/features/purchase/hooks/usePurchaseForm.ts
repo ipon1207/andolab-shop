@@ -8,6 +8,7 @@ export const usePurchaseForm = () => {
         lastProduct,
         lastPurchaseLog,
         isProcessing,
+        allProducts,
         executePurchase,
         executePurchaseCancel,
     } = usePurchase();
@@ -27,8 +28,9 @@ export const usePurchaseForm = () => {
     };
 
     // 購入実行
-    const handlePurchase = async () => {
-        const result = await executePurchase(janCode);
+    const handlePurchase = async (targetCode?: string) => {
+        const codeToUse = targetCode || janCode;
+        const result = await executePurchase(codeToUse);
 
         if (result.success) {
             setJanCode('');
@@ -55,6 +57,7 @@ export const usePurchaseForm = () => {
         lastProduct,
         lastPurchaseLog,
         isProcessing,
+        allProducts,
         focusInput,
         readBarCode,
         executePurchase: handlePurchase,

@@ -1,4 +1,8 @@
-import { BulkSupplyitem, ProductListResponseData } from '@andolab-shop/shared';
+import {
+    BulkSupplyitem,
+    ProductListResponseData,
+    ProductResponseData,
+} from '@andolab-shop/shared';
 import { useCallback, useEffect, useState } from 'react';
 import { supplyRepository } from '../api/repository';
 
@@ -84,10 +88,10 @@ export const useSupply = () => {
 
         // バリデーション: 空欄があるかチェック
         const hasEmpty = supplyList.some(
-            (row) => !row.janCode || !row.productName || row.quantity < 0,
+            (row) => !row.productName || row.quantity < 0,
         );
         if (hasEmpty) {
-            alert('仕入れ情報に未入力または不正な値があります');
+            alert('商品名、または個数に不備があります');
             return;
         }
 
@@ -114,6 +118,20 @@ export const useSupply = () => {
         }
     };
 
+    const addFromCatalog = (product: ProductResponseData) => {
+        setSupplyList((prev) => [
+            ...prev,
+            {
+                id: generateId(),
+                janCode: product.janCode || '',
+                productName: product.name,
+                price: product.price,
+                type: product.type,
+                quantity: 1,
+            },
+        ]);
+    };
+
     return {
         allProducts,
         supplyList,
@@ -122,5 +140,6 @@ export const useSupply = () => {
         updateRow,
         removeRow,
         submitSupply,
+        addFromCatalog,
     };
 };

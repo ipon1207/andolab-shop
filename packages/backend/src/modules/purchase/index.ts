@@ -22,6 +22,7 @@ const toProductResponse = (product: Product): ProductResponseData => {
         janCode: product.janCode,
         name: product.productName,
         price: product.price,
+        type: product.type,
         stock: product.stock,
     };
 };

@@ -11,6 +11,7 @@ export const productResponseSchema = z.object({
     janCode: z.string().nullable(),
     name: z.string(),
     price: z.number(),
+    type: z.string(),
     stock: z.number(),
 });
 
