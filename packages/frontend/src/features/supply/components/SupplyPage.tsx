@@ -1,4 +1,6 @@
 import { useSupply } from '../hooks/useSupply';
+import { CatalogModal } from './CatalogModal';
+import { useCatalog } from '../hooks/useCatalog';
 
 export const SupplyPage = () => {
     const {
@@ -9,7 +11,10 @@ export const SupplyPage = () => {
         updateRow,
         removeRow,
         submitSupply,
+        addFromCatalog,
     } = useSupply();
+
+    const catalog = useCatalog(allProducts);
 
     return (
         <div className="min-h-screen bg-gray-100 p-8">
@@ -189,6 +194,25 @@ export const SupplyPage = () => {
                 >
                     <span className="text-xl">+</span> 行を追加する
                 </button>
+                <button
+                    onClick={catalog.open}
+                    className="py-3 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors flex items-center justify-center gap-2 shadow-sm"
+                >
+                    <span className="text-xl">📖</span> カタログから選ぶ
+                </button>
+                {/* ★追加: モーダルコンポーネント */}
+                <CatalogModal
+                    isOpen={catalog.isOpen}
+                    onClose={catalog.close}
+                    onSelect={(product) => {
+                        addFromCatalog(product);
+                        catalog.close(); // 選択したら閉じる
+                    }}
+                    filteredProducts={catalog.filteredProducts}
+                    selectedCategory={catalog.selectedCategory}
+                    onSelectCategory={catalog.selectCategory}
+                    categories={catalog.categories}
+                />
             </div>
         </div>
     );
