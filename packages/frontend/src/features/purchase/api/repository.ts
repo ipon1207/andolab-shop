@@ -1,4 +1,5 @@
 import {
+    productListSchema,
     productResponseSchema,
     purchaseLogResponseSchema,
 } from '@andolab-shop/shared';
@@ -40,6 +41,15 @@ export const purchaseRepository = {
         if (!parsed.success) {
             throw new Error('不正なレスポンス形式です');
         }
+        return parsed.data;
+    },
+    // 商品マスタ全件取得
+    fetchAllProducts: async () => {
+        const res = await client.api.products.$get();
+        if (!res.ok) throw new Error('商品一覧の取得に失敗しました');
+        const data = await res.json();
+        const parsed = productListSchema.safeParse(data);
+        if (!parsed.success) throw new Error('不正なレスポンス形式です');
         return parsed.data;
     },
 };
