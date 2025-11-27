@@ -21,9 +21,10 @@ export const usePurchaseForm = () => {
 
     // inputフォームにフォーカスを当てる
     const focusInput = () => {
+        // dialogなどの要素が閉じた後にフォーカスを当てるため、少し遅延させる
         setTimeout(() => {
             inputRef.current?.focus();
-        }, 0);
+        }, 50);
     };
 
     // バーコードの入力値処理
