@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useCatalog } from '../../../hooks/useCatalog';
 import { usePurchaseForm } from '../hooks/usePurchaseForm';
 import { CatalogModal } from '../../../components/CatalogModal';
@@ -16,7 +17,15 @@ function PurchasePage() {
         allProducts,
     } = usePurchaseForm();
 
-    const catalog = useCatalog(allProducts);
+    // インストアコードを持つ商品のみに絞り込む
+    const inStoreProducts = useMemo(() => {
+        return allProducts.filter(
+            (product) =>
+                product.janCode && product.janCode.startsWith('INSTORE-'),
+        );
+    }, [allProducts]);
+
+    const catalog = useCatalog(inStoreProducts);
 
     // カタログで商品が選択されたときの処理
 
