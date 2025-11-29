@@ -130,3 +130,9 @@
 
 - **[DEPLOYMENT.md](./documents/DEPLOYMENT.md)**
     - このアプリケーションをRaspberry Piの本番環境で永続化させ、OS起動時に自動でサーバーを起動させるための手順をまとめています。
+
+- **[DIRECTORY_STRUCTURE.md](./documents/DIRECTORY_STRUCTURE.md)**
+    - モノレポのディレクトリ構成、各パッケージの役割、アーキテクチャについて説明しています。
+
+- **[API ドキュメント](./documents/API/README.md)**
+    - バックエンドAPIのエンドポイント、リクエスト/レスポンス形式、型定義などの仕様をまとめています。
